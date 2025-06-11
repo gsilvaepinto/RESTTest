@@ -7,10 +7,9 @@
 </head>
 <body>
     <% for (let c of comments){ %>
-        <p><b><%= c.comment %></b> - <%= c.username %> <a href='/comments/<%= c.id %>'>details</a></p>
+        <p><b><%= c.comment %></b> - <%= c.username %> <a href="/comments/<%= c.id %>">Details</a></p>
     <% } %>
-
-    <p><a href="/comments/compose">New Comment</a></p>
     <p><a href="/">Go Back</a></p>
+    <a href="/comments/newComment">New Comment</a>
 </body>
 </html>

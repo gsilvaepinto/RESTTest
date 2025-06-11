@@ -1,12 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const { v4: uuidv, parse } = require('uuid');
+const { v4: uuid } = require('uuid');
 
-const comments = [
-    {id: uuidv(), username: 'Todd', comment: 'i do not agree with that'},
-    {id: uuidv(), username: 'Maria', comment: 'maybe yes'},
-    {id: uuidv(), username: 'Todd', comment: 'your should not to that'},
+let comments = [
+    {id: uuid(), username: 'Todd', comment: 'that is very funny'},
+    {id: uuid(), username: 'Maria', comment: 'maybe tomorrow'},
+    {id: uuid(), username: 'Sara', comment: 'i love elon'},
 ]
+
+function findCommentById(id){
+    return comments.find(c => c.id === id);
+}
+
+function deleteCommentById(id){
+    return comments.filter(c => c.id !== id);
+}
 
 router.route('/')
     .get((req, res) => {
@@ -14,19 +22,21 @@ router.route('/')
     })
     .post((req, res) => {
         const {username, comment} = req.body;
-        comments.push({username, comment, id: uuidv()});
+        if (!username || !comment) {
+            return res.status(400).render('comments/newComment', { error: 'Please fill in all fields.' });
+        }
+        comments.push({username, comment, id: uuid()});
         res.redirect('/comments');
     })
 
-router.route('/new')
-    .get((req, res) => {
-        res.render('comments/newComment');
-    })
+router.get('/newComment', (req, res) => {
+    res.render('comments/newComment');
+})
 
 router.route('/:id')
     .get((req, res) => {
         const {id} = req.params;
-        const comment = comments.find(c => c.id === (id));
+        const comment = findCommentById(id);
         if (!comment){
             return res.status(404).send('NO COMMENT FOUND');
         }
@@ -42,12 +52,17 @@ router.route('/:id')
         foundComment.comment = newComment;
         res.redirect('/comments');
     })
+    .delete((req, res) => {
+        const {id} = req.params;
+        comments = deleteCommentById(id);
+        res.redirect('/comments');
+    })
 
 router.get('/:id/edit', (req, res) => {
     const {id} = req.params;
-    const comment = comments.find(c => c.id === id);
+    const comment = findCommentById(id);
     if (!comment){
-        return res.status(404).send('NO COMMENT FOUND');
+        return res.status(404).send('No comment found');
     }
     res.render('comments/edit', {comment});
 })
