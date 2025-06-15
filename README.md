@@ -60,3 +60,12 @@ This app includes the following pages:
 | `/comments/:id/edit`   | GET    | Show form to edit a comment     |
 
 ---
+
+## Future Improvements
+	•	Connect to a database like MongoDB
+	•	Add user authentication
+	•	Display timestamps on comments
+	•	Use flash messages for success/error notifications
+	•	Add styling with CSS frameworks like Tailwind or Bootstrap
+ 
+ Note: The data will reset each time the server restarts, since no database is connected.
