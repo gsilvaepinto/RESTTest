@@ -25,6 +25,8 @@ This app includes the following pages:
 - **Edit Comment** – Form to modify an existing comment  
 - **Comment Details** – View one comment's full content
 
+https://github.com/user-attachments/assets/2f3c2860-7113-4586-b59d-59723c721dd7
+
 ---
 
 ## Technologies Used
